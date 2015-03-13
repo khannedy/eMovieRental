@@ -1,0 +1,448 @@
+/*
+ * DILARANG MENGHAPUS ATAU MENGEDIT COPYRIGHT INI.
+ * 
+ * Copyright 2008 echo.khannedy@gmail.com. 
+ * All rights reserved.
+ * 
+ * Semua isi dalam file ini adalah hak milik dari echo.khannedy@gmail.com
+ * Anda tak diperkenankan untuk menggunakan file atau mengubah file
+ * ini kecuali anda tidak menghapus atau merubah lisence ini.
+ * 
+ * File ini dibuat menggunakan :
+ * IDE        : NetBeans
+ * NoteBook   : Acer Aspire 5920G
+ * OS         : Windows Vista
+ * Java       : Java 1.6
+ * 
+ */
+package usu.rental.film.admin;
+
+import java.awt.event.ActionListener;
+import java.util.Date;
+import javax.swing.RowFilter;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
+import usu.rental.film.data.template.Peminjaman;
+import usu.rental.film.widget.Table;
+import usu.rental.film.widget.table.TableModelPeminjaman;
+import usu.rental.film.widget.table.render.DefaultTableCellRender;
+
+/**
+ *
+ * @author  usu
+ */
+public class PanelPeminjaman extends javax.swing.JPanel {
+
+    /*
+     * Serial version UID
+     */
+    private static final long serialVersionUID = 1L;
+    private TableModelPeminjaman tableModel;
+
+    /** Creates new form PanelAnggota */
+    public PanelPeminjaman() {
+        initVariables();
+        initComponents();
+        initFinals();
+        initActions();
+    }
+
+    public void addActionListenerSaring(ActionListener l) {
+        buttonSaring.addActionListener(l);
+    }
+
+    public void addActionListenerHapus(ActionListener l) {
+        buttonHapus.addActionListener(l);
+    }
+
+    public void addActionListenerSegarkan(ActionListener l) {
+        buttonSegarkan.addActionListener(l);
+    }
+
+    public TableModelPeminjaman getTableModel() {
+        return tableModel;
+    }
+
+    @Override
+    public void setEnabled(boolean enabled) {
+        super.setEnabled(enabled);
+        table.setEnabled(enabled);
+        textCari.setEnabled(enabled);
+        buttonHapus.setEnabled(enabled);
+        buttonSaring.setEnabled(enabled);
+        buttonSegarkan.setEnabled(enabled);
+        textIdAnggota.setEnabled(enabled);
+        textIdFilm.setEnabled(enabled);
+        textIdOperator.setEnabled(enabled);
+        textStatus.setEnabled(enabled);
+        textTanggalPeminjaman.setEnabled(enabled);
+        textTanggalPengembalian.setEnabled(enabled);
+    }
+
+    public void reset() {
+        textCari.setText("");
+        textIdAnggota.setText("");
+        textIdFilm.setText("");
+        textIdOperator.setText("");
+        textStatus.setSelected(true);
+        textTanggalPeminjaman.setValue(new Date());
+        textTanggalPengembalian.setValue(new Date());
+    }
+
+    public Table getTable() {
+        return table;
+    }
+
+    private void initActions() {
+        textCari.getDocument().addDocumentListener(new DocumentListener() {
+
+            public void insertUpdate(DocumentEvent e) {
+                filterTable(textCari.getText());
+            }
+
+            public void removeUpdate(DocumentEvent e) {
+                filterTable(textCari.getText());
+            }
+
+            public void changedUpdate(DocumentEvent e) {
+                filterTable(textCari.getText());
+            }
+        });
+
+        table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+
+            private Peminjaman temp;
+            private int index;
+
+            public void valueChanged(ListSelectionEvent e) {
+                try {
+                    index = table.convertRowIndexToModel(table.getSelectedRow());
+                    temp = tableModel.get(index);
+                    textIdAnggota.setText(temp.getAnggota());
+                    textIdFilm.setText(temp.getFilm());
+                    textIdOperator.setText(temp.getOperator());
+                    textStatus.setSelected(temp.isTelahDikembalikan());
+                    textTanggalPeminjaman.setValue(temp.getTanggalPeminjaman());
+                    textTanggalPengembalian.setValue(temp.getTanggalPengembalian());
+                    textIdTransaksi.setText(String.valueOf(temp.getIdTransaksi()));
+                } catch (IndexOutOfBoundsException ex) {
+                }
+            }
+        });
+    }
+
+    @SuppressWarnings("unchecked")
+    public void filterTable(String text) {
+        if (text.trim().equals("")) {
+            ((TableRowSorter<TableModel>) table.getRowSorter()).setRowFilter(null);
+        } else {
+            ((TableRowSorter<TableModel>) table.getRowSorter()).setRowFilter(RowFilter.regexFilter(text));
+        }
+    }
+
+    /** This method is called from within the constructor to
+     * initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is
+     * always regenerated by the Form Editor.
+     */
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        usu.rental.film.widget.ScrollPane scrollpane = new usu.rental.film.widget.ScrollPane();
+        table = new usu.rental.film.widget.Table();
+        usu.rental.film.widget.Label label1 = new usu.rental.film.widget.Label();
+        textCari = new usu.rental.film.widget.TextBox();
+        buttonSaring = new usu.rental.film.widget.Button();
+        buttonHapus = new usu.rental.film.widget.Button();
+        buttonSegarkan = new usu.rental.film.widget.Button();
+        usu.widget.glass.PanelGlass panelGlass1 = new usu.widget.glass.PanelGlass();
+        usu.rental.film.widget.Label label3 = new usu.rental.film.widget.Label();
+        usu.rental.film.widget.Label label4 = new usu.rental.film.widget.Label();
+        usu.rental.film.widget.Label label5 = new usu.rental.film.widget.Label();
+        usu.rental.film.widget.Label label6 = new usu.rental.film.widget.Label();
+        usu.rental.film.widget.Label label7 = new usu.rental.film.widget.Label();
+        usu.rental.film.widget.Label label8 = new usu.rental.film.widget.Label();
+        textIdAnggota = new usu.rental.film.widget.TextBox();
+        textIdOperator = new usu.rental.film.widget.TextBox();
+        textIdFilm = new usu.rental.film.widget.TextBox();
+        textTanggalPeminjaman = new usu.rental.film.widget.FormatterBox();
+        textTanggalPengembalian = new usu.rental.film.widget.FormatterBox();
+        textStatus = new javax.swing.JCheckBox();
+        usu.rental.film.widget.Label label2 = new usu.rental.film.widget.Label();
+        textIdTransaksi = new usu.rental.film.widget.TextBox();
+
+        setOpaque(false);
+
+        scrollpane.setViewportView(table);
+
+        label1.setDisplayedMnemonic('C');
+        label1.setText("cari (case sensitive) :");
+
+        textCari.setFocusAccelerator('C');
+
+        buttonSaring.setMnemonic('G');
+        buttonSaring.setText("saring");
+
+        buttonHapus.setMnemonic('H');
+        buttonHapus.setText("hapus");
+
+        buttonSegarkan.setMnemonic('S');
+        buttonSegarkan.setText("segarkan");
+
+        panelGlass1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        panelGlass1.setOpaqueImage(false);
+        panelGlass1.setRound(false);
+
+        label3.setDisplayedMnemonic('D');
+        label3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        label3.setText("id anggota :");
+
+        label4.setDisplayedMnemonic('O');
+        label4.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        label4.setText("id operator :");
+
+        label5.setDisplayedMnemonic('F');
+        label5.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        label5.setText("id film :");
+
+        label6.setDisplayedMnemonic('I');
+        label6.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        label6.setText("tanggal peminjaman :");
+
+        label7.setDisplayedMnemonic('M');
+        label7.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        label7.setText("tanggal pengembalian :");
+
+        label8.setDisplayedMnemonic('A');
+        label8.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        label8.setText("status :");
+
+        textIdAnggota.setEditable(false);
+        textIdAnggota.setFocusAccelerator('D');
+        textIdAnggota.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                textIdAnggotaActionPerformed(evt);
+            }
+        });
+
+        textIdOperator.setEditable(false);
+        textIdOperator.setFocusAccelerator('O');
+        textIdOperator.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                textIdOperatorActionPerformed(evt);
+            }
+        });
+
+        textIdFilm.setEditable(false);
+        textIdFilm.setFocusAccelerator('F');
+        textIdFilm.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                textIdFilmActionPerformed(evt);
+            }
+        });
+
+        textTanggalPeminjaman.setEditable(false);
+        textTanggalPeminjaman.setFocusAccelerator('I');
+        textTanggalPeminjaman.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getDateInstance(java.text.DateFormat.LONG))));
+        textTanggalPeminjaman.setValue(new java.util.Date());
+        textTanggalPeminjaman.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                textTanggalPeminjamanActionPerformed(evt);
+            }
+        });
+
+        textTanggalPengembalian.setEditable(false);
+        textTanggalPengembalian.setFocusAccelerator('M');
+        textTanggalPengembalian.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getDateInstance(java.text.DateFormat.LONG))));
+        textTanggalPengembalian.setValue(new java.util.Date());
+        textTanggalPengembalian.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                textTanggalPengembalianActionPerformed(evt);
+            }
+        });
+
+        textStatus.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        textStatus.setForeground(new java.awt.Color(255, 255, 255));
+        textStatus.setMnemonic('A');
+        textStatus.setSelected(true);
+        textStatus.setText("telah dikembalikan");
+        textStatus.setOpaque(false);
+        textStatus.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                textStatusItemStateChanged(evt);
+            }
+        });
+
+        label2.setDisplayedMnemonic('I');
+        label2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        label2.setText("id transaksi :");
+
+        textIdTransaksi.setEditable(false);
+        textIdTransaksi.setFocusAccelerator('I');
+        textIdTransaksi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                textIdTransaksiActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout panelGlass1Layout = new javax.swing.GroupLayout(panelGlass1);
+        panelGlass1.setLayout(panelGlass1Layout);
+        panelGlass1Layout.setHorizontalGroup(
+            panelGlass1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelGlass1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelGlass1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(label2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(label8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(label4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(label3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(label5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(label6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(label7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panelGlass1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(textIdTransaksi, javax.swing.GroupLayout.DEFAULT_SIZE, 499, Short.MAX_VALUE)
+                    .addComponent(textStatus, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 499, Short.MAX_VALUE)
+                    .addComponent(textTanggalPengembalian, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 499, Short.MAX_VALUE)
+                    .addComponent(textTanggalPeminjaman, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 499, Short.MAX_VALUE)
+                    .addComponent(textIdFilm, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 499, Short.MAX_VALUE)
+                    .addComponent(textIdOperator, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 499, Short.MAX_VALUE)
+                    .addComponent(textIdAnggota, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 499, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        panelGlass1Layout.setVerticalGroup(
+            panelGlass1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelGlass1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelGlass1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(textIdTransaksi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(label2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panelGlass1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(label3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(textIdAnggota, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panelGlass1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(label4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(textIdOperator, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panelGlass1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(label5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(textIdFilm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panelGlass1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(label6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(textTanggalPeminjaman, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panelGlass1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(label7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(textTanggalPengembalian, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panelGlass1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(label8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(textStatus))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(panelGlass1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(scrollpane, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 657, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(textCari, javax.swing.GroupLayout.DEFAULT_SIZE, 533, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addComponent(buttonSegarkan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 432, Short.MAX_VALUE)
+                        .addComponent(buttonHapus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(buttonSaring, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(textCari, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(scrollpane, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(panelGlass1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(buttonSegarkan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(buttonSaring, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(buttonHapus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
+        );
+    }// </editor-fold>//GEN-END:initComponents
+    private void textStatusItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_textStatusItemStateChanged
+        if (textStatus.isSelected()) {
+            textStatus.setText("telah dikembalikan");
+        } else {
+            textStatus.setText("belum dikembalikan");
+        }
+    }//GEN-LAST:event_textStatusItemStateChanged
+
+private void textIdTransaksiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textIdTransaksiActionPerformed
+    textIdAnggota.requestFocusInWindow();
+}//GEN-LAST:event_textIdTransaksiActionPerformed
+
+private void textIdAnggotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textIdAnggotaActionPerformed
+    textIdOperator.requestFocusInWindow();
+}//GEN-LAST:event_textIdAnggotaActionPerformed
+
+private void textIdOperatorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textIdOperatorActionPerformed
+    textIdFilm.requestFocusInWindow();
+}//GEN-LAST:event_textIdOperatorActionPerformed
+
+private void textIdFilmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textIdFilmActionPerformed
+    textTanggalPeminjaman.requestFocusInWindow();
+}//GEN-LAST:event_textIdFilmActionPerformed
+
+private void textTanggalPeminjamanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textTanggalPeminjamanActionPerformed
+    textTanggalPengembalian.requestFocusInWindow();
+}//GEN-LAST:event_textTanggalPeminjamanActionPerformed
+
+private void textTanggalPengembalianActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textTanggalPengembalianActionPerformed
+    textStatus.requestFocusInWindow();
+}//GEN-LAST:event_textTanggalPengembalianActionPerformed
+
+    private void initFinals() {
+        table.setModel(tableModel);
+
+        for (int i = 0; i < table.getColumnCount(); i++) {
+            table.getColumnModel().getColumn(i).setCellRenderer(new DefaultTableCellRender());
+        }
+    }
+
+    private void initVariables() {
+        tableModel = new TableModelPeminjaman();
+    }
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    usu.rental.film.widget.Button buttonHapus;
+    usu.rental.film.widget.Button buttonSaring;
+    usu.rental.film.widget.Button buttonSegarkan;
+    usu.rental.film.widget.Table table;
+    usu.rental.film.widget.TextBox textCari;
+    usu.rental.film.widget.TextBox textIdAnggota;
+    usu.rental.film.widget.TextBox textIdFilm;
+    usu.rental.film.widget.TextBox textIdOperator;
+    usu.rental.film.widget.TextBox textIdTransaksi;
+    javax.swing.JCheckBox textStatus;
+    usu.rental.film.widget.FormatterBox textTanggalPeminjaman;
+    usu.rental.film.widget.FormatterBox textTanggalPengembalian;
+    // End of variables declaration//GEN-END:variables
+}
